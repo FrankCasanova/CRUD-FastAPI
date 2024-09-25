@@ -13,11 +13,21 @@ def get_all_tasks() -> list[TaskWithID]:
         return [TaskWithID(**row) for row in csv_reader]
 
 def get_task_by_id(id: int) -> Optional[TaskWithID]:
+    """
+    Check if id exists in CSV file and return it as TaskWithID
+
+    Args:
+        id (int): The id of the task to search for
+
+    Returns:
+        Optional[TaskWithID]: The task if it exists, None if it doesn't
+    """
     with open(CSV_FILE) as csv_file:
         csv_reader = csv.DictReader(csv_file)
         for row in csv_reader:
-            if row["id"] == str(id):
+            if int(row["id"]) == id:
                 return TaskWithID(**row)
+    return None
 
 
 #strategy to write a task
