@@ -53,7 +53,10 @@ def test_endpoint_create_task():
         "description": "will be done",
         "status": "Ready",
     }
-    response = client.post("/task", json=task)
+    headers = {
+        "Authorization": "Bearer tokenizedjohndoe"
+    }
+    response = client.post("/task", json=task, headers=headers)
     assert response.status_code == 200
     assert response.json() == {**task, "id": 3}
     assert len(get_all_tasks()) == 3
@@ -64,13 +67,19 @@ def test_endpoint_update_task():
         "description": "will be done",
         "status": "Ready",
     }
-    response = client.put("/task/1", json=task)
+    headers = {
+        "Authorization": "Bearer tokenizedjohndoe"
+    }
+    response = client.put("/task/1", json=task, headers=headers)
     assert response.status_code == 200
-    response = client.put("/task/8", json=task)
+    response = client.put("/task/8", json=task, headers=headers)
     assert response.status_code == 404
 
 def test_endopint_delete_task():
-    response = client.delete("/task/1")
+    headers = {
+        "Authorization": "Bearer tokenizedjohndoe"
+    }
+    response = client.delete("/task/1", headers=headers)
     assert response.status_code == 200
     assert response.json() == {"id": 1, "title": "Test Task One", "description": "Test Description One", "status": "Incomplete"}
     assert len(get_all_tasks()) == 1
