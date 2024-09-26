@@ -12,14 +12,38 @@ TEST_TASKS_CSV = [
         "id": "1",
         "title": "Test Task One",
         "description": "Test Description One",
+        "status": "Incomplete"
+    },
+    {
+        "id": "2",
+        "title": "Test Task Two",
+        "description": "Test Description Two",
+        "status": "On-going"
+        
+    }
+]
+
+TEST_TASKS_CSV_V2 = [
+    {
+        "id": "1",
+        "title": "Test Task One",
+        "description": "Test Description One",
         "status": "Incomplete",
+        "priority": "lower"
     },
     {
         "id": "2",
         "title": "Test Task Two",
         "description": "Test Description Two",
         "status": "On-going",
+        "priority": "lower"
+        
     }
+]
+
+TEST_TASKS_V2 = [
+    {**task_json, "id": int(task_json["id"])}
+    for task_json in TEST_TASKS_CSV_V2
 ]
 
 TEST_TASKS = [

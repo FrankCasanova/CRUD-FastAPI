@@ -5,7 +5,7 @@ from schemas import TaskWithID
 
 client = TestClient(app)
 
-from conftest import TEST_TASKS
+from conftest import TEST_TASKS, TEST_TASKS_V2
 
 def test_endopint_read_all_tasks():
     response = client.get("/tasks")
@@ -13,6 +13,16 @@ def test_endopint_read_all_tasks():
     assert response.json() == TEST_TASKS
     assert len(response.json()) == 2
     assert response.headers["Content-Type"] == "application/json"
+
+def test_endpoint_read_all_tasks_v2():
+    response = client.get("/v2/tasks")
+    print(TEST_TASKS_V2)
+    print(response.json())
+    assert response.status_code == 200
+    assert len(response.json()) == 2
+    assert response.headers["Content-Type"] == "application/json"
+    assert response.json()[1]['priority'] == 'lower'
+
 
 def test_endpoint_search_tasks():
     response = client.get("/tasks/search?keyword=Test")

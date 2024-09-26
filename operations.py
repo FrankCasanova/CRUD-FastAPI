@@ -1,11 +1,22 @@
 import csv
 from typing import Optional
-from schemas import Task, TaskWithID
+from schemas import Task, TaskWithID, taskv2WithID
 
 #constants
 CSV_FILE = "tasks.csv"
 
 columns = ["id", "title", "description", "status"]
+
+
+#-----------V2----------------
+def read_all_tasks_v2() -> list[taskv2WithID]:
+    with open(CSV_FILE) as csv_file:
+        csv_reader = csv.DictReader(csv_file)
+        return [taskv2WithID(**row) for row in csv_reader]
+
+#-----------------------------
+
+
 
 def get_all_tasks() -> list[TaskWithID]:
     with open(CSV_FILE) as csv_file:

@@ -2,10 +2,10 @@ from typing import List, Optional
 from fastapi import FastAPI, HTTPException
 
 #schemas
-from schemas import Task, TaskWithID
+from schemas import Task, TaskWithID, taskv2WithID
 
 #operations
-from operations import create_task, delete_task, get_all_tasks, get_task_by_id, modify_task
+from operations import create_task, delete_task, get_all_tasks, get_task_by_id, modify_task, read_all_tasks_v2
 
 
 app = FastAPI(
@@ -28,6 +28,11 @@ app = FastAPI(
 async def root():
     return {"message": "Task Application"}
 
+#-----------V2----------------
+@app.get("/v2/tasks", response_model=List[taskv2WithID])
+async def get_tasks_v2():
+    return read_all_tasks_v2()
+
 @app.get("/tasks", response_model=List[TaskWithID])
 async def get_tasks(
     status: Optional[str] = None,
@@ -37,9 +42,9 @@ async def get_tasks(
     try:
         tasks = get_all_tasks()
         if status is not None:
-            tasks = [task for task in tasks if task.status == status]
+            tasks = [task for task in tasks if task.status.lower() == status.lower()]
         if title is not None:
-            tasks = [task for task in tasks if task.title == title]
+            tasks = [task for task in tasks if task.title.lower() == title.lower()]
         return tasks
     except:
         raise HTTPException(status_code=500, detail="Something went wrong")
