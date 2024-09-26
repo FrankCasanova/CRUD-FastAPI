@@ -24,3 +24,15 @@ class taskv2WithID(Taskv2):
     id: int
     
 #-----------------------------
+
+
+
+#-------------USERS----------------
+
+class User(BaseModel):
+    username: str
+
+class UserInDB(User):
+    hashed_password: str
+
+#----------------------------------
