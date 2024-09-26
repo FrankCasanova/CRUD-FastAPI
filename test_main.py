@@ -1,6 +1,7 @@
 from main import app
 from fastapi.testclient import TestClient
 from operations import get_all_tasks
+from schemas import TaskWithID
 
 client = TestClient(app)
 
@@ -13,6 +14,12 @@ def test_endopint_read_all_tasks():
     assert len(response.json()) == 2
     assert response.headers["Content-Type"] == "application/json"
 
+def test_endpoint_search_tasks():
+    response = client.get("/tasks/search?keyword=Test")
+    assert response.status_code == 200
+    assert response.json() == TEST_TASKS
+    assert len(response.json()) == 2
+    assert response.headers["Content-Type"] == "application/json"
 
 def test_endpoint_read_task_by_id():
     response = client.get("/task/1")

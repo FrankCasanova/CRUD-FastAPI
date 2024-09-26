@@ -18,8 +18,8 @@ TEST_TASKS_CSV = [
         "id": "2",
         "title": "Test Task Two",
         "description": "Test Description Two",
-        "status": "Ongoing",
-    },
+        "status": "On-going",
+    }
 ]
 
 TEST_TASKS = [

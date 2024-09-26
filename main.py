@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Optional
 from fastapi import FastAPI, HTTPException
 
 #schemas
@@ -29,11 +29,25 @@ async def root():
     return {"message": "Task Application"}
 
 @app.get("/tasks", response_model=List[TaskWithID])
-async def get_tasks():
+async def get_tasks(
+    status: Optional[str] = None,
+    title: Optional[str] = None
+):
+    
     try:
-        return get_all_tasks()
+        tasks = get_all_tasks()
+        if status is not None:
+            tasks = [task for task in tasks if task.status == status]
+        if title is not None:
+            tasks = [task for task in tasks if task.title == title]
+        return tasks
     except:
         raise HTTPException(status_code=500, detail="Something went wrong")
+
+@app.get("/tasks/search", response_model=List[TaskWithID])
+async def search_tasks(keyword: str):
+    tasks = get_all_tasks()
+    return [task for task in tasks if keyword.lower() in task.title.lower() or keyword.lower() in task.description.lower()]
 
 @app.get("/task/{task_id}", response_model=TaskWithID)
 async def get_task(task_id: int):
@@ -64,4 +78,4 @@ async def delete_task_endpoint(task_id: int):
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=True, reload_delay=1)
+    uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=True, reload_delay=2.0)
