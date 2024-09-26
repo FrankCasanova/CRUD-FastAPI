@@ -90,18 +90,24 @@ async def get_task(task_id: int):
     return task
 
 @app.post("/task", response_model=TaskWithID)
-async def create_task_endpoint(task: Task):
+async def create_task_endpoint(task: Task, current_user: User = Depends(get_user_from_token)):
+    if current_user.username not in fake_users_db:
+        raise HTTPException(status_code=404, detail="User not found")
     return create_task(task)
 
 @app.put("/task/{task_id}", response_model=TaskWithID)
-async def update_task_endpoint(task_id: int, task: Task):
+async def update_task_endpoint(task_id: int, task: Task, current_user: User = Depends(get_user_from_token)):
+    if current_user.username not in fake_users_db:
+        raise HTTPException(status_code=404, detail="User not found")
     task = modify_task(task_id, task)
     if task is None:
         raise HTTPException(status_code=404, detail="Task not found")
     return task
 
 @app.delete("/task/{task_id}", response_model=TaskWithID)
-async def delete_task_endpoint(task_id: int):
+async def delete_task_endpoint(task_id: int, current_user: User = Depends(get_user_from_token)):
+    if current_user.username not in fake_users_db:
+        raise HTTPException(status_code=404, detail="User not found")
     task = delete_task(task_id)
     if task is None:
         raise HTTPException(status_code=404, detail="Task not found")

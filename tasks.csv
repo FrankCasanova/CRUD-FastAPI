@@ -1,9 +1,9 @@
-id,title,description,status,priority
-3,Task 3,read,Done,lower
-4,Best implementation,Example of the best implementation,Incomplete,high
-5,Task 5,to take a shower,Incomplete,medium
-6,Task 6,implement some news app ,On_going,medium
-7,Task 7, meet with my girlfriend,Done,medium
-8,Another Task,To eat something,Incomplete,medium
-9,To eat,I'd like to eat something,Incomplete,medium
-10,vale,si,Done,high
+id,title,description,status
+3,Task 3,read,Done
+4,Best implementation,Example of the best implementation,Incomplete
+5,Task 5,to take a shower,Incomplete
+6,Task 6,implement some news app ,On_going
+8,Another Task,To eat something,Incomplete
+9,To eat,I'd like to eat something,Incomplete
+10,vale,si,Done
+11,Comer,Salir y comer algo,Done
