@@ -54,6 +54,27 @@ TEST_TASKS = [
 
 @pytest.fixture(autouse=True)
 def create_test_database():
+    """
+    Pytest fixture to automatically create a test database
+    before all tests. The database is removed after all tests
+    are finished.
+
+    The database is created in the same directory as the
+    test file and is named "test_database.csv".
+
+    The test database is populated with the tasks in
+    TEST_TASKS_CSV.
+
+    The fixture patches the operations.CSV_FILE to point to
+    the test database, and yields the patched object.
+
+    The fixture is autouse, meaning it is automatically run
+    before every test without needing to be explicitly
+    referenced in the test function.
+
+    :return: The patched operations.CSV_FILE
+    :rtype: unittest.mock.MagicMock
+    """
     database_file_location = str(
         Path(__file__).parent / TEST_DATABASE_FILE
     )
