@@ -1,3 +1,4 @@
+from typing import Union
 from fastapi import Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer
 
@@ -56,7 +57,7 @@ def fake_token_generator(user: UserInDB) -> str:
     """
     return f'tokenized{user.username}'
 
-def fake_decode_token(token: str) -> UserInDB | None:
+def fake_decode_token(token: str) -> Union[UserInDB, None]:
     if token.startswith('tokenized'):
         user_id = token.removeprefix('tokenized')
         user = get_user(fake_users_db, user_id)
