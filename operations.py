@@ -1,5 +1,5 @@
 import csv
-from typing import Optional
+from typing import Optional, List
 from schemas import Task, TaskWithID, taskv2WithID
 
 #constants
@@ -9,7 +9,7 @@ columns = ["id", "title", "description", "status"]
 
 
 #-----------V2----------------
-def read_all_tasks_v2() -> list[taskv2WithID]:
+def read_all_tasks_v2() -> List[taskv2WithID]:
     """
     Reads all tasks from the csv file and returns them as a list of taskv2WithID objects
 
@@ -24,7 +24,7 @@ def read_all_tasks_v2() -> list[taskv2WithID]:
 
 
 
-def get_all_tasks() -> list[TaskWithID]: 
+def get_all_tasks() -> List[TaskWithID]: 
     """
     Reads all tasks from the csv file and returns them as a list of TaskWithID objects
 
